@@ -1,4 +1,11 @@
-import { MissileP21, MissileP22, FireAK630, Radar } from './missile.js';
+import {
+	MissileP21,
+	MissileP22,
+	FireAK630,
+	FireAK726,
+	FirePK16,
+	Radar,
+} from './missile.js';
 import { ArcDetection } from './approachLine.js';
 
 export class Ship {
@@ -85,16 +92,16 @@ export class Fregata extends Ship {
 		super(simulare);
 		this.simulare = simulare;
 		this.image = fregataImage;
-		this.spriteWidth = 232;
-		this.spriteHeight = 348;
-		this.initialWidth = this.spriteWidth / 3.5;
-		this.width = this.spriteWidth / 1.4;
-		this.initialHeight = this.spriteHeight / 2;
-		this.height = this.spriteHeight;
-		this.initialX = this.initialWidth;
-		this.x = this.width / 4;
-		this.initialY = this.totalHeight / 2;
-		this.y = this.totalHeight / 4;
+		this.spriteWidth = 528;
+		this.spriteHeight = 466;
+		this.initialWidth = this.spriteWidth / 4.5;
+		this.width = this.spriteWidth / 2;
+		this.initialHeight = this.spriteHeight / 3;
+		this.height = this.spriteHeight / 2;
+		this.initialX = this.initialWidth / 4;
+		this.x = this.width / 5;
+		this.initialY = this.totalHeight / 1.8;
+		this.y = this.totalHeight / 2;
 		this.isDrawn = false;
 		this.radius = this.width * 4.25;
 		this.approachLine = new ArcDetection(this.simulare);
@@ -102,9 +109,16 @@ export class Fregata extends Ship {
 		this.fireAK630 = [
 			new FireAK630(this.simulare),
 			new FireAK630(this.simulare),
-			new FireAK630(this.simulare),
-			new FireAK630(this.simulare),
 		];
+		this.fireAK726 = [
+			new FireAK726(this.simulare),
+			new FireAK726(this.simulare),
+		];
+		this.firePK16 = new FirePK16(
+			this.simulare,
+			this.x + this.width * 1.4,
+			this.y - this.height / 4.5
+		);
 		this.zoomedIn = false;
 	}
 	draw(context) {

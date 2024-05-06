@@ -19,12 +19,6 @@ export class Explosion {
 	}
 
 	draw(context) {
-		// context.clearRect(
-		// 	this.x,
-		// 	this.y,
-		// 	this.width * this.size,
-		// 	this.height * this.size
-		// );
 		context.drawImage(
 			this.image,
 			0,
@@ -47,7 +41,6 @@ export class Explosion {
 			this.frameTime = 0;
 		}
 		if (this.frame > 9) {
-			// adjust the number of frames
 			this.markedForDeletion = true;
 		}
 	}
