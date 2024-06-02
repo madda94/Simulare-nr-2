@@ -46,21 +46,33 @@ img {
 }
 
 .btns-scenarii {
-    display: none;
+    /* display: none; */
     position: absolute;
     top: 2%;
-    left: 1%;
+    left: 4%;
     margin: 0;
     text-align: center;
+    display: flex;
 
 }
 
 .btn-scenariu {
     padding: 1rem 3rem;
     text-align: center;
+    display: none;
 }
 
 .btn-scenariu-selected {
     background-color: #706969;
     color: aliceblue;
+}
+
+.continue {
+    padding: 0 .8rem;
+    position: absolute;
+    top: 2%;
+    left: 1%;
+    margin: 0;
+    text-align: center;
+    display: none;
 }
