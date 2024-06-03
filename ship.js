@@ -3,8 +3,18 @@ import {
 	MissileP22,
 	FireAK630,
 	FireAK726,
-	FirePK16,
+	FirePK16_1,
 	FirePK16_2,
+	FirePK16_3,
+	FirePK16_4,
+	FirePK16_5,
+	FirePK16_6,
+	FirePK16_7,
+	FirePK16_8,
+	FirePK16_9,
+	FirePK16_10,
+	FirePK16_11,
+	FirePK16_12,
 	Radar,
 } from './missile.js';
 import { ArcDetection } from './approachLine.js';
@@ -119,16 +129,70 @@ export class Fregata extends Ship {
 			new FireAK726(this.simulare),
 			new FireAK726(this.simulare),
 		];
-		this.firePK16 = new FirePK16(
-			this.simulare,
-			this.x + this.width * 1.4,
-			this.y - this.height / 4.5
-		);
-		this.firePK16_2 = new FirePK16_2(
-			this.simulare,
-			this.x + this.width,
-			this.y - this.height / 1.7
-		);
+		this.firePK16_Up = [
+			new FirePK16_1(
+				this.simulare,
+				this.x + this.width / 0.9,
+				this.y + this.height / 3.2
+			),
+			new FirePK16_2(
+				this.simulare,
+				this.x + this.width / 0.95,
+				this.y + this.height / 3.2
+			),
+			new FirePK16_3(
+				this.simulare,
+				this.x + this.width / 1,
+				this.y + this.height / 3.2
+			),
+			new FirePK16_4(
+				this.simulare,
+				this.x + this.width / 1.2,
+				this.y + this.height / 3.2
+			),
+			new FirePK16_5(
+				this.simulare,
+				this.x + this.width / 1.4,
+				this.y + this.height / 3.2
+			),
+			new FirePK16_6(
+				this.simulare,
+				this.x + this.width / 1.6,
+				this.y + this.height / 3.2
+			),
+		];
+		this.firePK16_Down = [
+			new FirePK16_7(
+				this.simulare,
+				this.x + this.width / 0.9,
+				this.y + this.height / 3.2
+			),
+			new FirePK16_8(
+				this.simulare,
+				this.x + this.width / 0.95,
+				this.y + this.height / 3.2
+			),
+			new FirePK16_9(
+				this.simulare,
+				this.x + this.width / 1,
+				this.y + this.height / 3.2
+			),
+			new FirePK16_10(
+				this.simulare,
+				this.x + this.width / 1.2,
+				this.y + this.height / 3.2
+			),
+			new FirePK16_11(
+				this.simulare,
+				this.x + this.width / 1.4,
+				this.y + this.height / 3.2
+			),
+			new FirePK16_12(
+				this.simulare,
+				this.x + this.width / 1.6,
+				this.y + this.height / 3.2
+			),
+		];
 		this.zoomedIn = false;
 	}
 	draw(context) {

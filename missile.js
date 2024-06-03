@@ -1,4 +1,13 @@
-import { Dust, SmokeAK726, Cloud, Cloud2 } from './missileReaction.js';
+import {
+	Dust,
+	SmokeAK726,
+	Cloud0,
+	Cloud1,
+	Cloud2,
+	Cloud3,
+	Cloud4,
+	Cloud5,
+} from './missileReaction.js';
 
 class Missile {
 	constructor(simulare) {
@@ -230,134 +239,6 @@ export class FireAK726 {
 		);
 	}
 }
-export class FirePK16 {
-	constructor(simulare, x, y) {
-		this.simulare = simulare;
-		this.totalWidth = this.simulare.width;
-		this.totalHeight = this.simulare.height;
-		this.x = x;
-		this.width = 10;
-		this.height = 30;
-		this.y = y;
-		this.moveX = this.x;
-		this.moveY = this.y;
-		this.fireInterval = 150;
-		this.fireTime = 0;
-		this.speedX = this.simulare.speed * 3;
-		this.speedY = this.simulare.speed * 6;
-		this.color = 'black';
-		this.fireCount = 0;
-		this.maxFire = 0;
-		this.fireStop = false;
-		this.cloudDrawn = false;
-	}
-	draw(context) {
-		context.save();
-		context.beginPath();
-		context.translate(
-			this.moveX + this.width / 2,
-			this.moveY + this.height / 2
-		);
-		context.rotate(-Math.PI / 6);
-		context.translate(-this.width / 2, -this.height / 2);
-		context.fillStyle = this.color;
-		context.roundRect(0, 0, this.width, this.height, [0, 0, 5, 5]);
-		context.fill();
-		context.restore();
-	}
-
-	update(context) {
-		if (this.fireCount > this.maxFire) this.fireStop = true;
-		if (!this.fireStop) {
-			if (this.fireTime < this.fireInterval) {
-				if (this.moveX <= this.x + 100) {
-					this.moveX += this.speedX;
-					this.moveY += this.speedY;
-					this.draw(context);
-				} else {
-					this.createCloud(this.moveX + 20, this.moveY + 20);
-					this.cloudDrawn = true;
-				}
-				this.fireTime++;
-			} else {
-				this.fireCount++;
-				this.moveX = this.x;
-				this.moveY = this.y;
-				this.draw(context);
-				this.fireTime = 0;
-			}
-		}
-	}
-	createCloud(x, y) {
-		if (!this.cloudDrawn)
-			this.simulare.cloud.unshift(new Cloud(this.simulare, x, y));
-	}
-}
-
-export class FirePK16_2 {
-	constructor(simulare, x, y) {
-		this.simulare = simulare;
-		this.totalWidth = this.simulare.width;
-		this.totalHeight = this.simulare.height;
-		this.x = x;
-		this.width = 10;
-		this.height = 30;
-		this.y = y;
-		this.moveX = this.x;
-		this.moveY = this.y;
-		this.fireInterval = 150;
-		this.fireTime = 0;
-		this.color = 'black';
-		this.fireCount = 0;
-		this.maxFire = 6;
-		this.fireStop = false;
-		this.speedX = this.simulare.speed * 3;
-		this.speedY = this.simulare.speed * 4;
-		this.cloudDrawn = false;
-	}
-	draw(context) {
-		context.save();
-		context.beginPath();
-		context.translate(
-			this.moveX + this.width / 2,
-			this.moveY + this.height / 2
-		);
-		context.rotate(-Math.PI / 7);
-		context.translate(-this.width / 2, -this.height / 2);
-		context.fillStyle = this.color;
-		context.roundRect(0, 0, this.width, this.height, [5, 5, 0, 0]);
-		context.fill();
-		context.restore();
-	}
-
-	update(context) {
-		if (this.fireCount > this.maxFire) this.fireStop = true;
-		if (!this.fireStop) {
-			if (this.fireTime < this.fireInterval) {
-				if (this.moveX >= this.x - 100) {
-					this.moveX -= this.speedX;
-					this.moveY -= this.speedY;
-					this.draw(context);
-				} else {
-					this.createCloud(this.moveX + 20, this.moveY + 20);
-					this.cloudDrawn = true;
-				}
-				this.fireTime++;
-			} else {
-				this.fireCount++;
-				this.moveX = this.x;
-				this.moveY = this.y;
-				this.draw(context);
-				this.fireTime = 0;
-			}
-		}
-	}
-	createCloud(x, y) {
-		if (!this.cloudDrawn)
-			this.simulare.cloud2.unshift(new Cloud2(this.simulare, x, y));
-	}
-}
-
 export class Radar {
 	constructor(simulare) {
 		this.simulare = simulare;
@@ -401,5 +282,252 @@ export class Radar {
 				}
 			}
 		}
+	}
+}
+
+class FirePK16 {
+	constructor(simulare, x, y) {
+		this.simulare = simulare;
+		this.totalWidth = this.simulare.width;
+		this.totalHeight = this.simulare.height;
+		this.x = x;
+		this.width = 10;
+		this.height = 30;
+		this.y = y;
+		this.moveX = this.x;
+		this.moveY = this.y;
+		this.color = 'black';
+		this.hasAppeared = false; // Add a flag to track if the fire particle has appeared
+		this.cloudCreated = false; // Add a flag to track if the cloud has been created
+	}
+	draw(context) {
+		context.save();
+		context.beginPath();
+		context.translate(
+			this.moveX + this.width / 2,
+			this.moveY + this.height / 2
+		);
+		context.rotate(this.rotationGrade);
+		context.translate(-this.width / 2, -this.height / 2);
+		context.fillStyle = this.color;
+		context.roundRect(0, 0, this.width, this.height, [0, 0, 5, 5]);
+		context.fill();
+		context.restore();
+	}
+
+	update(context) {
+		this.fireTime++;
+		if (this.fireTime >= this.delay) {
+			// delay has elapsed, update the particle
+			if (!this.hasAppeared) {
+				this.draw(context);
+				if (this.moveX <= this.x + 100) {
+					this.moveX += this.speedX;
+					this.moveY -= this.speedY;
+					this.draw(context);
+				} else {
+					this.createCloud(this.moveX + 20, this.moveY + 20);
+					this.cloudCreated = true;
+					this.hasAppeared = true;
+				}
+			} else if (this.cloudCreated && this.simulare.cloud[this.numberCloud]) {
+				this.simulare.cloud[this.numberCloud].draw(context);
+			}
+		}
+	}
+}
+export class FirePK16_1 extends FirePK16 {
+	constructor(simulare, x, y) {
+		super(simulare, x, y);
+		// modificare orientare linie (rotire mai spre sus sau spre jos)
+		this.rotationGrade = -Math.PI / 6;
+		this.numberCloud = 0;
+		this.delay = 50; // delay in milliseconds (1 second)
+		this.fireTime = 0;
+		// modificare directie si viteza
+		this.speedX = this.simulare.speed;
+		this.speedY = this.simulare.speed;
+	}
+	createCloud(x, y) {
+		this.simulare.cloud.unshift(new Cloud0(this.simulare, x, y));
+	}
+}
+
+export class FirePK16_2 extends FirePK16 {
+	constructor(simulare, x, y) {
+		super(simulare, x, y);
+		// modificare orientare linie (rotire mai spre sus sau spre jos)
+		this.rotationGrade = -Math.PI / 1.4;
+		this.numberCloud = 1;
+		this.delay = 100; // delay in milliseconds (1 second)
+		this.fireTime = 0;
+		// modificare directie si viteza
+		this.speedX = this.simulare.speed;
+		this.speedY = this.simulare.speed * 1.5;
+	}
+	createCloud(x, y) {
+		this.simulare.cloud.unshift(new Cloud1(this.simulare, x, y));
+	}
+}
+export class FirePK16_3 extends FirePK16 {
+	constructor(simulare, x, y) {
+		super(simulare, x, y);
+		// modificare orientare linie (rotire mai spre sus sau spre jos)
+		this.rotationGrade = -Math.PI / 1.2;
+		this.numberCloud = 2;
+		this.delay = 150; // delay in milliseconds (1 second)
+		this.fireTime = 0;
+		// modificare directie si viteza
+		this.speedX = this.simulare.speed * 1.5;
+		this.speedY = this.simulare.speed * 2;
+	}
+	createCloud(x, y) {
+		this.simulare.cloud.unshift(new Cloud2(this.simulare, x, y));
+	}
+}
+export class FirePK16_4 extends FirePK16 {
+	constructor(simulare, x, y) {
+		super(simulare, x, y);
+		// modificare orientare linie (rotire mai spre sus sau spre jos)
+		this.rotationGrade = -Math.PI / 1.85;
+		this.numberCloud = 3;
+		this.delay = 200; // delay in milliseconds (1 second)
+		this.fireTime = 0;
+		// modificare directie si viteza
+		this.speedX = this.simulare.speed * 2;
+		this.speedY = this.simulare.speed * 2.5;
+	}
+	createCloud(x, y) {
+		this.simulare.cloud.unshift(new Cloud3(this.simulare, x, y));
+	}
+}
+export class FirePK16_5 extends FirePK16 {
+	constructor(simulare, x, y) {
+		super(simulare, x, y);
+		// modificare orientare linie (rotire mai spre sus sau spre jos)
+		this.rotationGrade = -Math.PI / 2.1;
+		this.numberCloud = 4;
+		this.delay = 250; // delay in milliseconds (1 second)
+		this.fireTime = 0;
+		// modificare directie si viteza
+		this.speedX = this.simulare.speed * 2.5;
+		this.speedY = this.simulare.speed * 3;
+	}
+	createCloud(x, y) {
+		this.simulare.cloud.unshift(new Cloud4(this.simulare, x, y));
+	}
+}
+export class FirePK16_6 extends FirePK16 {
+	constructor(simulare, x, y) {
+		super(simulare, x, y);
+		// modificare orientare linie (rotire mai spre sus sau spre jos)
+		this.rotationGrade = -Math.PI / 2.3;
+		this.numberCloud = 5;
+		this.delay = 300; // delay in milliseconds (1 second)
+		this.fireTime = 0;
+		// modificare directie si viteza
+		this.speedX = this.simulare.speed * 3;
+		this.speedY = this.simulare.speed * 3;
+	}
+	createCloud(x, y) {
+		this.simulare.cloud.unshift(new Cloud5(this.simulare, x, y));
+		// cloud.draw(context);
+	}
+}
+export class FirePK16_7 extends FirePK16 {
+	constructor(simulare, x, y) {
+		super(simulare, x, y);
+		// modificare orientare linie (rotire mai spre sus sau spre jos)
+		this.rotationGrade = -Math.PI / 6;
+		this.numberCloud = 0;
+		this.delay = 50; // delay in milliseconds (1 second)
+		this.fireTime = 0;
+		// modificare directie si viteza
+		this.speedX = this.simulare.speed * 3;
+		this.speedY = this.simulare.speed * 2.5;
+	}
+	createCloud(x, y) {
+		this.simulare.cloud.unshift(new Cloud0(this.simulare, x, y));
+	}
+}
+
+export class FirePK16_8 extends FirePK16 {
+	constructor(simulare, x, y) {
+		super(simulare, x, y);
+		// modificare orientare linie (rotire mai spre sus sau spre jos)
+		this.rotationGrade = -Math.PI / 1.4;
+		this.numberCloud = 1;
+		this.delay = 100; // delay in milliseconds (1 second)
+		this.fireTime = 0;
+		// modificare directie si viteza
+		this.speedX = this.simulare.speed * 3;
+		this.speedY = this.simulare.speed * 2;
+	}
+	createCloud(x, y) {
+		this.simulare.cloud.unshift(new Cloud1(this.simulare, x, y));
+	}
+}
+export class FirePK16_9 extends FirePK16 {
+	constructor(simulare, x, y) {
+		super(simulare, x, y);
+		// modificare orientare linie (rotire mai spre sus sau spre jos)
+		this.rotationGrade = -Math.PI / 1.2;
+		this.numberCloud = 2;
+		this.delay = 150; // delay in milliseconds (1 second)
+		this.fireTime = 0;
+		// modificare directie si viteza
+		this.speedX = this.simulare.speed * 2.5;
+		this.speedY = this.simulare.speed * 2;
+	}
+	createCloud(x, y) {
+		this.simulare.cloud.unshift(new Cloud2(this.simulare, x, y));
+	}
+}
+export class FirePK16_10 extends FirePK16 {
+	constructor(simulare, x, y) {
+		super(simulare, x, y);
+		// modificare orientare linie (rotire mai spre sus sau spre jos)
+		this.rotationGrade = -Math.PI / 1.85;
+		this.numberCloud = 3;
+		this.delay = 200; // delay in milliseconds (1 second)
+		this.fireTime = 0;
+		// modificare directie si viteza
+		this.speedX = this.simulare.speed * 2;
+		this.speedY = this.simulare.speed * 1.5;
+	}
+	createCloud(x, y) {
+		this.simulare.cloud.unshift(new Cloud3(this.simulare, x, y));
+	}
+}
+export class FirePK16_11 extends FirePK16 {
+	constructor(simulare, x, y) {
+		super(simulare, x, y);
+		// modificare orientare linie (rotire mai spre sus sau spre jos)
+		this.rotationGrade = -Math.PI / 2.1;
+		this.numberCloud = 4;
+		this.delay = 250; // delay in milliseconds (1 second)
+		this.fireTime = 0;
+		// modificare directie si viteza
+		this.speedX = this.simulare.speed * 1.5;
+		this.speedY = this.simulare.speed;
+	}
+	createCloud(x, y) {
+		this.simulare.cloud.unshift(new Cloud4(this.simulare, x, y));
+	}
+}
+export class FirePK16_12 extends FirePK16 {
+	constructor(simulare, x, y) {
+		super(simulare, x, y);
+		// modificare orientare linie (rotire mai spre sus sau spre jos)
+		this.rotationGrade = -Math.PI / 2.3;
+		this.numberCloud = 5;
+		this.delay = 300; // delay in milliseconds (1 second)
+		this.fireTime = 0;
+		// modificare directie si viteza
+		this.speedX = this.simulare.speed;
+		this.speedY = this.simulare.speed * 0.5;
+	}
+	createCloud(x, y) {
+		this.simulare.cloud.unshift(new Cloud5(this.simulare, x, y));
 	}
 }
