@@ -24,11 +24,11 @@ export class Ship {
 		this.simulare = simulare;
 		this.totalWidth = this.simulare.width;
 		this.totalHeight = this.simulare.height;
-		this.spriteWidth = 402;
-		this.spriteHeight = 149;
-		this.initialWidth = this.spriteWidth / 3;
+		this.spriteWidth = 300;
+		this.spriteHeight = 200;
+		this.initialWidth = this.spriteWidth / 10;
 		this.width = this.spriteWidth;
-		this.initialHeight = this.spriteHeight / 3;
+		this.initialHeight = this.spriteHeight / 10;
 		this.height = this.spriteHeight;
 		this.initialX = this.simulare.width - this.initialWidth;
 		this.initialY = this.totalHeight / 3;
@@ -107,7 +107,7 @@ export class Fregata extends Ship {
 		super(simulare);
 		this.simulare = simulare;
 		this.image = fregataImage;
-		this.spriteWidth = 528;
+		this.spriteWidth = 520;
 		this.spriteHeight = 466;
 		this.initialWidth = this.spriteWidth / 4.5;
 		this.width = this.spriteWidth / 2;
@@ -133,64 +133,64 @@ export class Fregata extends Ship {
 			new FirePK16_1(
 				this.simulare,
 				this.x + this.width / 0.9,
-				this.y + this.height / 3.2
+				this.y * 0.65
 			),
 			new FirePK16_2(
 				this.simulare,
-				this.x + this.width / 0.95,
-				this.y + this.height / 3.2
+				this.x + this.width / 0.9,
+				this.y * 0.6
 			),
 			new FirePK16_3(
 				this.simulare,
-				this.x + this.width / 1,
-				this.y + this.height / 3.2
+				this.x + this.width / 0.9,
+				this.y * 0.6
 			),
 			new FirePK16_4(
 				this.simulare,
-				this.x + this.width / 1.2,
-				this.y + this.height / 3.2
+				this.x + this.width / 0.9,
+				this.y * 0.6
 			),
 			new FirePK16_5(
 				this.simulare,
-				this.x + this.width / 1.4,
-				this.y + this.height / 3.2
+				this.x + this.width / 0.9,
+				this.y * 0.6
 			),
 			new FirePK16_6(
 				this.simulare,
-				this.x + this.width / 1.6,
-				this.y + this.height / 3.2
+				this.x + this.width / 0.9,
+				this.y * 0.6
 			),
 		];
 		this.firePK16_Down = [
 			new FirePK16_7(
 				this.simulare,
-				this.x + this.width / 0.9,
-				this.y + this.height / 3.2
+				this.x + this.width / 1,
+				this.y * 0.8
 			),
 			new FirePK16_8(
 				this.simulare,
-				this.x + this.width / 0.95,
-				this.y + this.height / 3.2
+				this.x + this.width / 1,
+				this.y * 0.8
 			),
 			new FirePK16_9(
 				this.simulare,
 				this.x + this.width / 1,
-				this.y + this.height / 3.2
+				this.y * 0.8
 			),
 			new FirePK16_10(
 				this.simulare,
-				this.x + this.width / 1.2,
-				this.y + this.height / 3.2
+				this.x + this.width / 1,
+				this.y * 0.8
 			),
 			new FirePK16_11(
 				this.simulare,
-				this.x + this.width / 1.4,
-				this.y + this.height / 3.2
+				this.x + this.width / 1,
+				this.y * 0.8
 			),
 			new FirePK16_12(
 				this.simulare,
-				this.x + this.width / 1.6,
-				this.y + this.height / 3.2
+				this.x + this.width / 1,
+				this.y * 0.8
 			),
 		];
 		this.zoomedIn = false;
